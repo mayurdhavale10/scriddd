@@ -1,4 +1,4 @@
-import { useMachineSensor } from "@/context/MachineSensorContext";
+import { useMachineSensor } from "@/context/factory/MachineSensorContext";
 import { sensorThresholds } from "@/lib/sensors/sensorThresholds";
 import { MetricType } from "@/lib/sensors/types";
 

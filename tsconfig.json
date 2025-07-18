@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
@@ -13,29 +16,53 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-
-    // ✅ Aliases
+    // ✅ Path aliases
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],                    // General-purpose src alias
-      "@components/*": ["./src/components/*"], // Navbar, Modal, etc.
-      "@context/*": ["./src/context/*"],       // ModalContext, FactoryContext
-      "~/*": ["./public/*"],                   // Images & static assets
-      "#/*": ["./types/*"]                     // Global types (optional)
+      "@/*": [
+        "src/*"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@context/*": [
+        "src/context/*"
+      ],
+      "@hooks/*": [
+        "src/hooks/*"
+      ],
+      "@lib/*": [
+        "src/lib/*"
+      ],
+      "@services/*": [
+        "src/services/*"
+      ],
+      "@plugins/*": [
+        "src/plugins/*"
+      ],
+      "@public/*": [
+        "public/*"
+      ],
+      "@types/*": [
+        "types/*"
+      ]
     },
-
-    // ✅ Next.js plugin
+    // ✅ Next.js plugin support
     "plugins": [
       {
         "name": "next"
       }
-    ]
+    ],
+    "noEmit": true
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "next-env.d.ts",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    ".next" // ✅ Prevent TypeScript from compiling .next build files
+  ]
 }
