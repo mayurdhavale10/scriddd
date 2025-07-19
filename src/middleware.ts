@@ -1,19 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-export function middleware(req: NextRequest) {
-  const hostname = req.headers.get('host') || '';
-  const url = req.nextUrl.clone();
+export function middleware(request: NextRequest) {
+  const hostname = request.headers.get("host") || "";
+  const subdomain = hostname.split(".")[0];
 
-  // Extract subdomain (e.g. alpha.scriddd.com → alpha)
-  const subdomain = hostname
-    .replace('.scriddd.com', '')
-    .replace('.vercel.app', '');
-
-  if (
-    subdomain &&
-    subdomain !== 'scriddd' && // ignore root domain
-    subdomain !== 'www'
-  ) {
+  if (subdomain !== "scriddd" && subdomain !== "www") {
+    const url = request.nextUrl.clone();
     url.pathname = `/saasmodel/factory/${subdomain}${url.pathname}`;
     return NextResponse.rewrite(url);
   }
@@ -22,5 +15,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+  matcher: ['/((?!_next|favicon.ico|api).*)'],
 };
