@@ -1,21 +1,23 @@
- "use client";
+// src/context/ModalContext.tsx
+'use client';
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 type ModalContextType = {
+  isLoginOpen: boolean;
+  setLoginOpen: (open: boolean) => void;
   isSignupOpen: boolean;
   setSignupOpen: (open: boolean) => void;
-  setLoginOpen: (open: boolean) => void;
 };
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
-export const ModalProvider = ({ children }: { children: ReactNode }) => {
+export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
+  const [isLoginOpen, setLoginOpen] = useState(false);
   const [isSignupOpen, setSignupOpen] = useState(false);
-  const [isLoginOpen, setLoginOpen] = useState(false); // Optional: can expose later if needed
 
   return (
-    <ModalContext.Provider value={{ isSignupOpen, setSignupOpen, setLoginOpen }}>
+    <ModalContext.Provider value={{ isLoginOpen, setLoginOpen, isSignupOpen, setSignupOpen }}>
       {children}
     </ModalContext.Provider>
   );
@@ -24,7 +26,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 export const useModal = (): ModalContextType => {
   const context = useContext(ModalContext);
   if (!context) {
-    throw new Error('useModal must be used within ModalProvider');
+    throw new Error('useModal must be used within a ModalProvider');
   }
   return context;
 };

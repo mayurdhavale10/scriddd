@@ -1,3 +1,4 @@
+// SignupModal.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -17,13 +18,10 @@ export default function SignupModal() {
   const [otpSent, setOtpSent] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
   const [previousPath, setPreviousPath] = useState("/");
 
   useEffect(() => {
-    if (isSignupOpen) {
-      setPreviousPath(pathname); // Save current page path when modal opens
-    }
+    if (isSignupOpen) setPreviousPath(pathname);
   }, [isSignupOpen, pathname]);
 
   if (!isSignupOpen) return null;
@@ -31,19 +29,16 @@ export default function SignupModal() {
   const sendOtp = async () => {
     setError("");
     setSuccess("");
-
     if (!identifier.trim()) {
       setError("Please enter email or phone first.");
       return;
     }
-
     try {
       const res = await fetch("http://localhost:8080/otp/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ identifier: identifier.trim() }),
+        body: JSON.stringify({ identifier: identifier.trim() })
       });
-
       const data = await res.json();
       if (res.ok) {
         setOtpSent(true);
@@ -73,15 +68,15 @@ export default function SignupModal() {
         username: username.trim(),
         identifier: identifier.trim(),
         password,
-        otp,
-      }),
+        otp
+      })
     });
 
     const data = await res.json();
     if (res.ok) {
       setSuccess("Signup successful!");
       setSignupOpen(false);
-      router.push(previousPath || "/dashboard"); // ✅ Redirect back to where user was
+      router.push(previousPath || "/dashboard");
     } else {
       setError(data.error || "Signup failed");
     }
@@ -93,12 +88,10 @@ export default function SignupModal() {
         <button
           onClick={() => setSignupOpen(false)}
           className="absolute top-2 right-2 text-gray-500 hover:text-red-500"
-        >
-          ✕
-        </button>
+        >✕</button>
 
         <div className="flex flex-col items-center">
-          <Image src="/logo.png" alt="Scrid Logo" width={40} height={40} />
+          <Image src="/scriddd_webapp_logo.webp" alt="Scriddd Logo" width={40} height={40} />
           <h2 className="text-2xl font-bold mt-3">Create Your Account</h2>
           <p className="text-gray-500 text-sm">Sign up to start recycling smart</p>
         </div>
@@ -108,7 +101,7 @@ export default function SignupModal() {
             type="text"
             placeholder="Username"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={e => setUsername(e.target.value)}
             className="w-full border px-4 py-2 rounded focus:ring"
             required
           />
@@ -117,7 +110,7 @@ export default function SignupModal() {
             type="text"
             placeholder="Email or Phone"
             value={identifier}
-            onChange={(e) => setIdentifier(e.target.value)}
+            onChange={e => setIdentifier(e.target.value)}
             className="w-full border px-4 py-2 rounded focus:ring"
             required
           />
@@ -126,7 +119,7 @@ export default function SignupModal() {
             type="password"
             placeholder="Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
             className="w-full border px-4 py-2 rounded focus:ring"
             required
           />
@@ -135,7 +128,7 @@ export default function SignupModal() {
             type="text"
             placeholder="Enter OTP"
             value={otp}
-            onChange={(e) => setOtp(e.target.value)}
+            onChange={e => setOtp(e.target.value)}
             className="w-full border px-4 py-2 rounded focus:ring"
             required
           />
